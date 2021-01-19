@@ -1,0 +1,49 @@
+Practical test for Node JS developer.
+
+ 
+
+Technology:
+
+Frontend : Angular 
+
+BackEnd : Node
+
+Database: Mysql/Mongo
+
+ 
+
+Task Detail:
+
+ 
+
+1. Create admin
+
+   - username,password
+
+2. Login admin
+
+3. Role Management (Add/Update/Delete)
+
+4. User Management (Add/Update/Delete)
+
+      -  id,username,password,email,mobile,role (email and mobile number validation)
+
+5. Login User
+
+6. User Dashboard
+
+7. Customer List (Add/Update/Delete)
+
+    - id,name,email,mobile,address (email and mobile number validation)
+
+8. Customer Transaction (Add/Update/Delete)
+
+   - transid,reference_numer,amount,date,customer_id
+
+   - import data from excel or csv for customer
+
+9. Report
+
+  - Transaction report by Date and Customer
+
+  
