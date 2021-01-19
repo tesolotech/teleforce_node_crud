@@ -11,6 +11,12 @@ module.exports = (app) => {
 
     app.delete('/api/CTransactionDelete/:CTransactionId', C_Transactions.CTransactionDeleteById);
 
+    app.get('/api/C_Transactions/:customerId', C_Transactions.GetCustomerTransaction);
+
+    // YYYY-MM-DD
+    app.get('/api/C_Transactions/:date', C_Transactions.GetAllTransactionByDate);
+
+
 
 }
 

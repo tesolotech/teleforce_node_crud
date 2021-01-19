@@ -156,3 +156,40 @@ exports.CTransactionUpdateById = (req, res) => {
 
 };
 
+exports.GetCustomerTransaction = (req, res) => {
+    C_Transaction.getC_TransactionByCId(req.params.customerId)
+        .then((result) => {
+            let response = {
+                status: 200,
+                message: "SUCEESS",
+                data: result || []
+            }
+            res.status(200).json(response);
+        }).catch((err) => {
+            let response = {
+                status: 400,
+                message: "ERROR",
+                data: []
+            }
+            res.status(400).json(response);
+        })
+}
+
+exports.GetAllTransactionByDate = (req, res) => {
+    C_Transaction.getC_TransactionByDate(req.params.date)
+        .then((result) => {
+            let response = {
+                status: 200,
+                message: "SUCEESS",
+                data: result || []
+            }
+            res.status(200).json(response);
+        }).catch((err) => {
+            let response = {
+                status: 400,
+                message: "ERROR",
+                data: []
+            }
+            res.status(400).json(response);
+        })
+}

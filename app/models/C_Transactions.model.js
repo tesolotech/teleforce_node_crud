@@ -5,7 +5,7 @@ const C_TransactionsSchema = mongoose.Schema({
     // _id: mongoose.Schema.Types.ObjectId,
     reference_numer: { type: String, required: true },
     amount: { type: String, required: true },
-    date: { type: Date, default: Date.now },
+    date: { type: Date },
     customer_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Customers' }
 }, {
     timestamps: true
@@ -25,11 +25,20 @@ C_TransactionsSchema.set('toJSON', {
     },
 });
 
+C_TransactionsSchema.method('toClient', function () {
+    var obj = this.toObject();
+
+    //Rename fields
+    obj.transId = obj._id;
+    // delete obj._id;
+    return obj;
+});
+
 // module.exports = mongoose.model('C_Transaction', C_TransactionsSchema);
 
 const C_Transaction = mongoose.model('C_Transaction', C_TransactionsSchema);
 
-exports.C_Transaction = C_Transactions;
+exports.C_Transaction = C_Transaction;
 
 
 C_TransactionsSchema.findById = function (cb) {
@@ -100,5 +109,24 @@ exports.updateData = (id, data) => {
     })
 }
 
+
+exports.getC_TransactionByCId = (id) => {
+    return new Promise((resolve, reject) => {
+        C_Transaction.find({ "customer_id": mongoose.ObjectId(id) }, (err, resp) => {
+            if (err) reject(err);
+            resolve(resp);
+        })
+    })
+}
+
+
+exports.getC_TransactionByDate = (date) => {
+    return new Promise((resolve, reject) => {
+        C_Transaction.find({ "date": new Date(new Date(date).setHours(00, 00, 00)) }, (err, resp) => {
+            if (err) reject(err);
+            resolve(resp);
+        }).sort({ date: 'asc' })
+    })
+}
 
 

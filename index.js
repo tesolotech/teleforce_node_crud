@@ -49,6 +49,7 @@ app.set('port', process.env.PORT || 3000);
 require('./app/routes/user.routes.js')(app);
 require('./app/routes/customers.routes.js')(app);
 require('./app/routes/roles.routes.js')(app);
+require('./app/routes/C_Transactions.routes.js')(app);
 
 app.listen(app.get('port'), () => console.log(`Server is listening on port ${app.get('port')}`));
 
