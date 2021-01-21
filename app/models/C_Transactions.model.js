@@ -129,4 +129,13 @@ exports.getC_TransactionByDate = (date) => {
     })
 }
 
+exports.bulkCreateC_Transaction = (transaction) => {
+    return new Promise((resolve, reject) => {
+        C_Transaction.insertMany(transaction, (err, resp) => {
+            if (err) reject(err);
+            resolve(resp);
+        }).sort({ date: 'asc' })
+    })
+}
+
 

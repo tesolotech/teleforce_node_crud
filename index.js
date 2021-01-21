@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 // create express app
 const app = express();
 
+global.__basedir = __dirname + "/..";
+
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }))
 

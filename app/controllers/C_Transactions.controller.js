@@ -1,7 +1,7 @@
 
 const mongoose = require('mongoose');
 const C_Transaction = require('../models/C_Transactions.model.js');
-
+const readXlsxFile = require('read-excel-file/node');
 
 // Create and save Business
 exports.createCTransaction = (req, res, next) => {
@@ -192,4 +192,53 @@ exports.GetAllTransactionByDate = (req, res) => {
             }
             res.status(400).json(response);
         })
+}
+
+
+exports.bulkUploadC_Transaction = (req, res) => {
+    try {
+        if (req.file == undefined) {
+            return res.status(400).send("Please upload an excel file!");
+        }
+
+        let path =
+            __basedir + "/resources/static/assets/uploads/" + req.file.filename;
+
+        readXlsxFile(path).then((rows) => {
+            // skip header
+            rows.shift();
+
+            let CTransactions = [];
+
+            rows.forEach((row) => {
+                let transaction = {
+                    reference_numer: row[0],
+                    amount: row[1],
+                    date: row[2],
+                    customer_id: row[3],
+                };
+
+                CTransactions.push(transaction);
+            });
+
+            C_Transaction.bulkCreateC_Transaction(CTransactions)
+                .then(() => {
+                    res.status(200).send({
+                        message: "Uploaded the file successfully: " + req.file.originalname,
+                    });
+                })
+                .catch((error) => {
+                    res.status(500).send({
+                        message: "Fail to import data into database!",
+                        error: error.message,
+                    });
+                });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            message: "Could not upload the file: " + req.file.originalname,
+        });
+    }
+
 }

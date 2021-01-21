@@ -1,4 +1,5 @@
 
+const upload = require('../middleware/upload');
 
 module.exports = (app) => {
     const C_Transactions = require('../controllers/C_Transactions.controller.js');
@@ -16,7 +17,7 @@ module.exports = (app) => {
     // YYYY-MM-DD
     app.get('/api/C_Transactions/:date', C_Transactions.GetAllTransactionByDate);
 
-
+    app.post("/api/uploadCTransaction", upload.single("file"), C_Transactions.bulkUploadC_Transaction);
 
 }
 
